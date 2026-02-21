@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mission Control Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+    }
+    header {
+      padding: 24px 32px;
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+    }
+    h1 {
+      margin: 0 0 4px 0;
+      font-size: 28px;
+    }
+    header p {
+      margin: 0;
+      color: #8b949e;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      padding: 24px 32px 64px;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 240px;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #58a6ff;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #c9d1d9;
+    }
+    .card ul li { margin-bottom: 6px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #8b949e;
+    }
+    .tag span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .tag .ok { background: #2ea043; }
+    .tag .warn { background: #f0883e; }
+    .tag .alert { background: #f85149; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    table th, table td {
+      border: 1px solid #30363d;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+    table th {
+      text-align: left;
+      background: #1c2128;
+      color: #8b949e;
+    }
+    table td { color: #c9d1d9; }
+
+    footer {
+      padding: 24px 32px;
+      border-top: 1px solid #30363d;
+      color: #8b949e;
+      font-size: 13px;
+    }
+    a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mission Control Dashboard</h1>
+    <p>Last updated: <strong>YYYY-MM-DD</strong> · Update before 10:00 AM PT</p>
+  </header>
+
+  <section class="board">
+    <article class="card">
+      <h2>Web Pulse (Helix)</h2>
+      <div class="tag"><span class="warn"></span>Status</div>
+      <ul>
+        <li><strong>Uptime / Issues:</strong> …</li>
+        <li><strong>Key Metrics:</strong> …</li>
+        <li><strong>In-flight Fixes:</strong> …</li>
+        <li><strong>Risks / Escalations:</strong> …</li>
+        <li><a href="../openclaw-web-ops">View web ops repo →</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>Sales & Channels (Celly)</h2>
+      <div class="tag"><span class="ok"></span>Status</div>
+      <ul>
+        <li><strong>Revenue Snapshot:</strong> …</li>
+        <li><strong>Pipeline / Outreach:</strong> …</li>
+        <li><strong>Marketplace Health:</strong> …</li>
+        <li><strong>Risks / Escalations:</strong> …</li>
+        <li><a href="../openclaw-sales-ops">View sales ops repo →</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>Product R&D Radar</h2>
+      <div class="tag"><span class="warn"></span>Status</div>
+      <ul>
+        <li><strong>Top Concepts:</strong> …</li>
+        <li><strong>Validation:</strong> …</li>
+        <li><strong>Decisions Needed:</strong> …</li>
+        <li><a href="../openclaw-profitlab">View radar reports →</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>Ops & Integrations</h2>
+      <div class="tag"><span class="warn"></span>Status</div>
+      <ul>
+        <li><strong>ShipStation:</strong> Pending key</li>
+        <li><strong>Gmail OAuth:</strong> Helper in progress</li>
+        <li><strong>GTM:</strong> Invite pending</li>
+        <li><strong>Amazon SP-API:</strong> Under review</li>
+      </ul>
+      <a href="integrations.md">Full integration tracker →</a>
+    </article>
+  </section>
+
+  <section class="board">
+    <article class="card" style="grid-column: span 2;">
+      <h2>Integrations Snapshot</h2>
+      <table>
+        <thead>
+          <tr><th>Integration</th><th>Status</th><th>Owner</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ShipStation API</td><td>Pending</td><td>Chili</td><td>Need key/secret</td></tr>
+          <tr><td>Gmail Bridge</td><td>In Progress</td><td>Chili</td><td>OAuth helper for token</td></tr>
+          <tr><td>GTM</td><td>Invite Pending</td><td>Helix/WixWatch</td><td>Need chili@gt40marine.com added</td></tr>
+          <tr><td>Amazon SP-API</td><td>Under Review</td><td>Celly</td><td>Waiting on Amazon approval</td></tr>
+          <tr><td>eBay MUAA</td><td>Pending</td><td>Celly/Baywatch</td><td>Invites sent • awaiting activation</td></tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+
+  <footer>
+    <p>Need something? Ping Chili. Mission Control lives here: <code>openclaw-mission-control</code>.</p>
+  </footer>
+</body>
+</html>
