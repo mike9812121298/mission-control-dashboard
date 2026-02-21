@@ -10,61 +10,61 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg: #05060a;
-      --panel: rgba(16, 18, 28, 0.85);
-      --panel-strong: #111323;
+      --bg: #03040a;
+      --panel: rgba(12, 14, 24, 0.92);
+      --panel-muted: rgba(12, 14, 24, 0.78);
       --border: rgba(255, 255, 255, 0.08);
-      --text: #f5f7ff;
-      --subtext: #9ba7c0;
-      --accent: linear-gradient(120deg, #6b9bff, #64fbd0);
-      --accent-2: linear-gradient(120deg, #ff9cf6, #ffc15c);
-      --card-shadow: 0 25px 80px rgba(3, 8, 20, 0.65);
+      --text: #f4f7ff;
+      --subtext: #9ca6c7;
+      --accent: #6efce0;
+      --accent-2: #8fc5ff;
+      --danger: #ff9da6;
+      --warn: #ffd68c;
+      --ok: #60f5b9;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, rgba(47,83,255,0.25), transparent 55%),
-                  radial-gradient(circle at 20% 20%, rgba(255,59,172,0.25), transparent 45%),
+      font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 15% 20%, rgba(107,129,255,0.25), transparent 55%),
+                  radial-gradient(circle at 85% 10%, rgba(255,137,203,0.25), transparent 45%),
                   var(--bg);
       color: var(--text);
       min-height: 100vh;
     }
 
     header {
-      padding: 32px clamp(20px, 5vw, 72px) 16px;
+      padding: clamp(24px, 5vw, 64px);
       position: sticky;
       top: 0;
-      backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(5,6,10,0.95) 0%, rgba(5,6,10,0.75) 60%, transparent 100%);
+      background: rgba(3,4,10,0.85);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,0.05);
-      z-index: 10;
+      z-index: 20;
     }
 
     header h1 {
-      margin: 0;
-      font-size: clamp(32px, 4vw, 48px);
+      margin: 0 0 6px;
+      font-size: clamp(32px, 4vw, 54px);
     }
 
     header p {
-      margin: 6px 0 18px;
+      margin: 6px 0 20px;
       color: var(--subtext);
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, auto));
       gap: 12px;
-      align-items: center;
     }
 
-    .toolbar input {
-      flex: 1;
-      min-width: 240px;
-      padding: 12px 16px;
+    .toolbar input,
+    .toolbar select {
+      padding: 14px 18px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.04);
@@ -74,63 +74,54 @@
 
     .toolbar button {
       border: none;
-      padding: 12px 22px;
       border-radius: 999px;
-      background: var(--accent);
-      color: #05060a;
+      background: linear-gradient(120deg, #75f3df, #8ed2ff);
+      color: #051524;
       font-weight: 600;
       cursor: pointer;
-      transition: opacity 0.2s ease;
+      padding: 14px 22px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .toolbar button:hover { opacity: 0.85; }
+    .toolbar button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(117,243,223,0.3); }
 
     main {
       padding: clamp(20px, 4vw, 64px);
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 30px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
 
     .card {
-      padding: 22px;
-      border-radius: 22px;
-      background: var(--panel);
+      border-radius: 24px;
       border: 1px solid var(--border);
-      box-shadow: var(--card-shadow);
-      min-height: 190px;
+      background: var(--panel);
+      box-shadow: 0 30px 80px rgba(2, 4, 12, 0.65);
+      padding: 24px;
     }
 
     .metric-card {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .metric-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
-      opacity: 0.4;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(135deg, rgba(117,243,223,0.1), rgba(11,15,31,0.9));
     }
 
     .metric-card h3 {
       margin: 0;
       font-size: 14px;
-      text-transform: uppercase;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--subtext);
     }
 
     .metric-value {
-      margin-top: 18px;
-      font-size: clamp(32px, 4vw, 44px);
+      margin: 16px 0 6px;
+      font-size: clamp(34px, 5vw, 46px);
       font-weight: 600;
     }
 
@@ -138,24 +129,34 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.07);
+      color: var(--subtext);
+      font-size: 13px;
     }
-
-    .trend.up { color: #5df3c2; }
-    .trend.down { color: #ff9d99; }
 
     .section-title {
-      font-size: 20px;
-      margin: 0 0 12px;
-      color: #c4d2ff;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: #cdd7ff;
     }
+
+    .status-pill {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-pill.ok { color: var(--ok); border-color: rgba(96,245,185,0.5); }
+    .status-pill.warn { color: var(--warn); border-color: rgba(255,214,140,0.5); }
+    .status-pill.alert { color: var(--danger); border-color: rgba(255,157,166,0.5); }
 
     ul.clean {
       list-style: none;
@@ -164,36 +165,11 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-    }
-
-    ul.clean li {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
       font-size: 15px;
       color: var(--subtext);
     }
 
-    ul.clean li strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    .status-pill.ok { color: #6dfcc6; border-color: rgba(109,252,198,0.4); }
-    .status-pill.warn { color: #ffd479; border-color: rgba(255,212,121,0.4); }
-    .status-pill.alert { color: #ff9dad; border-color: rgba(255,157,173,0.4); }
+    ul.clean li strong { color: var(--text); }
 
     .two-column {
       display: grid;
@@ -204,7 +180,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 14px;
     }
 
@@ -213,15 +189,9 @@
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    table th {
-      text-align: left;
-      font-weight: 600;
-      color: var(--subtext);
-    }
+    table th { text-align: left; color: var(--subtext); }
 
-    table td {
-      color: var(--text);
-    }
+    table td { color: var(--text); }
 
     .badge {
       font-size: 12px;
@@ -240,68 +210,64 @@
     .quick-links a {
       text-decoration: none;
       padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
       border-radius: 18px;
-      background: rgba(255,255,255,0.04);
       color: var(--text);
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: transform 0.2s ease, border 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.08);
       font-size: 14px;
-    }
-
-    .quick-links a:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.3);
     }
 
     footer {
-      padding: 48px clamp(20px, 5vw, 72px);
+      padding: 40px clamp(20px, 5vw, 72px);
       text-align: center;
       color: var(--subtext);
       font-size: 14px;
-    }
-
-    @media (max-width: 640px) {
-      header { padding-bottom: 24px; }
-      .toolbar button { width: 100%; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Mission Control</h1>
-    <p>Dual HQ for NoodleBomb & GT40 · Live systems health · Updated before 10:00 AM PT</p>
+    <p>Live status for NoodleBomb & GT40 · updated before 10:00 AM PT · run every system from one pane.</p>
     <div class="toolbar">
-      <input type="search" placeholder="Quick search · e.g. ShipStation, Baywatch, Survey20" />
-      <button>Request Update</button>
+      <input placeholder="Search agents, alerts, tasks..." />
+      <select>
+        <option>All Workstreams</option>
+        <option>Web / Helix</option>
+        <option>Sales / Celly</option>
+        <option>Product / GrateReach</option>
+        <option>Ops / Vector</option>
+      </select>
+      <button>Request Agent Update</button>
     </div>
   </header>
 
   <main>
     <section class="grid">
-      <article class="card metric-card" style="background: var(--panel-strong); border: none;">
+      <article class="card metric-card">
         <h3>Revenue this week</h3>
         <div class="metric-value">$182,400</div>
-        <div class="trend up">▲ +12.4% vs. prior 7 days</div>
-        <p style="color: var(--subtext); margin-top: 16px; font-size: 14px;">
-          NoodleBomb bundles driving 68% of lift. GT40 wholesale pacing at 94% of plan.
+        <div class="trend">▲ +12.4% vs last 7 days</div>
+        <p style="color: var(--subtext); margin-top: 16px;">
+          Bundles driving 68% lift; GT40 wholesale pacing 94% of target.
         </p>
       </article>
       <article class="card metric-card">
         <h3>Signals & Alerts</h3>
         <div class="metric-value">3 open</div>
-        <div class="trend down">Last cleared 12 hours ago</div>
+        <div class="trend">Pulse (2) · Integrations (1)</div>
         <ul class="clean" style="margin-top: 18px;">
-          <li><strong>Pulse</strong><span class="badge">2 anomalies</span></li>
-          <li><strong>Integrations</strong><span class="badge">ShipStation key missing</span></li>
-          <li><strong>Marketplace</strong><span class="badge">eBay MUAA pending</span></li>
+          <li><strong>Pulse</strong> – eBay anomaly awaiting Helix ack</li>
+          <li><strong>Integrations</strong> – ShipStation wired; Amazon SP-API pending</li>
+          <li><strong>Survey20</strong> – Keeper to verify coupon tonight</li>
         </ul>
       </article>
       <article class="card metric-card">
         <h3>Ops Focus</h3>
         <div class="metric-value">5 sprints</div>
-        <div class="trend up">Helix · Vector · Keeper</div>
-        <p style="color: var(--subtext); margin-top: 16px; font-size: 14px;">
-          Mission Control embed, Grate Mate validation, daily revenue automation, Survey20 coupon, integrations blitz.
+        <div class="trend">Helix, Vector, Keeper, GrateReach, PrintLab</div>
+        <p style="color: var(--subtext); margin-top: 16px;">
+          Mission Control embed, Grate Mate brief, Survey20 automation, eBay parity, 3D SKU scouting.
         </p>
       </article>
     </section>
@@ -313,99 +279,20 @@
           <span class="status-pill warn">Monitoring</span>
         </div>
         <ul class="clean">
-          <li><strong>Wholesale tiers</strong>Echo/Keeper activating 12 priority stores (JetSet + Baywatch feed)</li>
-          <li><strong>Marketplace parity</strong>Baywatch audit in progress · 36 listings missing on account #2</li>
-          <li><strong>Daily stand-up</strong>Celly cadence 8:00 AM PT · revenue rollup auto-posts to Mission Control</li>
-          <li><strong>Risks</strong>Amazon SP-API approval still pending; escalate by Tue if no response</li>
+          <li><strong>Wholesale tiers</strong> – Echo/Keeper targeting 12 stores; JetSet + Baywatch feeding leads.</li>
+          <li><strong>Marketplace parity</strong> – Baywatch audit logging today; 36 listings missing on account #2.</li>
+          <li><strong>Daily stand-up</strong> – Celly cadence 8:00 AM PT feeds Mission Control revenue tile.</li>
+          <li><strong>Risks</strong> – Amazon SP-API approval overdue · escalate Monday.</li>
         </ul>
       </article>
-
       <article class="card">
         <div class="section-title">
           Product & R&D
           <span class="status-pill alert">Action Needed</span>
         </div>
         <ul class="clean">
-          <li><strong>Grate Mate</strong>Feasibility brief due 9:00 AM · awaiting GrateReach drop</li>
-          <li><strong>Bundles</strong>ProfitLab + Merch prepping Feb 22 launch deck</li>
-          <li><strong>Surveys</strong>Keeper to launch Survey20 coupon flow post Merch approval</li>
-          <li><strong>Roadmap</strong>Horizon 5/15/30 update synced to $10K/mo profit goal</li>
+          <li><strong>Grate Mate</strong> – 72h feasibility brief due 9 AM; awaiting GrateReach drop.</li>
+          <li><strong>Bundles</strong> – ProfitLab + Merch prepping Feb 22 launch; QA with Horizon Monday.</li>
+          <li><strong>Survey20</strong> – Keeper automation + Merch email queued for review.</li>
+          <li><strong>Roadmap</strong> – Horizon 5/15/30 aligned to $10K/mo profit goal.</li>
         </ul>
-      </article>
-    </section>
-
-    <section class="card">
-      <div class="section-title">Integrations Tracker</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Integration</th>
-            <th>Status</th>
-            <th>Owner</th>
-            <th>Next Move</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>ShipStation API</td>
-            <td><span class="badge">Key required</span></td>
-            <td>Vector</td>
-            <td>Mike to retrieve credentials → Vector wires webhook</td>
-          </tr>
-          <tr>
-            <td>Amazon SP-API</td>
-            <td><span class="badge">Under review</span></td>
-            <td>Vector</td>
-            <td>Follow up with Amazon dev support Monday AM</td>
-          </tr>
-          <tr>
-            <td>Gmail Bridge</td>
-            <td><span class="badge">Live</span></td>
-            <td>Chili</td>
-            <td>NoodleBomb + GT40 tokens refreshed · spam cleanup automated</td>
-          </tr>
-          <tr>
-            <td>eBay MUAA</td>
-            <td><span class="badge">Pending</span></td>
-            <td>Baywatch</td>
-            <td>New account accepted invites · begin listing parity audit</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="two-column">
-      <article class="card">
-        <div class="section-title">Ops Sprints</div>
-        <table>
-          <thead>
-            <tr><th>Sprint</th><th>Owner</th><th>ETA</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Mission Control Embed</td><td>Helix → Chili</td><td>Today</td><td>Live via GitHub Pages</td></tr>
-            <tr><td>Survey20 Coupon</td><td>Keeper</td><td>Tonight</td><td>Automation proof needed</td></tr>
-            <tr><td>Grate Mate Brief</td><td>GrateReach</td><td>Due 9 AM</td><td>Waiting · escalate 10 AM</td></tr>
-            <tr><td>Listing Rewrites</td><td>Merch</td><td>Daily</td><td>3 SKUs per day target</td></tr>
-          </tbody>
-        </table>
-      </article>
-
-      <article class="card">
-        <div class="section-title">Quick Links</div>
-        <div class="quick-links">
-          <a href="https://mike9812121298.github.io/mission-control-dashboard/">Mission Control (live)</a>
-          <a href="../openclaw-mission-control/reports">Daily Reports</a>
-          <a href="../openclaw-web-ops">Web Ops Repo</a>
-          <a href="../openclaw-sales-ops">Sales Ops Repo</a>
-          <a href="../openclaw-mission-control/integrations.md">Integration Log</a>
-          <a href="../openclaw-mission-control/dashboard.html">Source HTML</a>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <footer>
-    Built with OpenClaw · Need something escalated? Ping Chili Davis · Revamped Feb 21, 2026
-  </footer>
-</body>
-</html>
