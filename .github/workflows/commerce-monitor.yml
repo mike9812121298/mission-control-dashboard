@@ -1,0 +1,20 @@
+name: Independent commerce monitor
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: independent-commerce-monitor
+  cancel-in-progress: false
+jobs:
+  public-purchase-paths:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check both public stores and four unpaid GT40 checkout paths
+        run: python3 monitor/check.py
