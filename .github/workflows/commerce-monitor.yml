@@ -22,3 +22,15 @@ jobs:
         run: python3 -m unittest discover -s monitor -p "test_*.py"
       - name: Check both public stores and four unpaid GT40 checkout paths
         run: python3 monitor/check.py
+      - uses: actions/setup-node@v4
+        if: always()
+        with:
+          node-version: '22'
+      - name: Install browser test dependencies
+        if: always()
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Test seven mobile and desktop purchase journeys
+        if: always()
+        run: npm run check:browser

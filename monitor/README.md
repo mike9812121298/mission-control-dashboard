@@ -1,9 +1,9 @@
 # Independent commerce monitoring
 
-Runs hourly at minute17 on a standard GitHub-hosted runner in this public repository. Uses no advertising/store credentials. Checks both public websites plus four GT40 public in-stock offers and creates unpaid checkout URLs. No customer data or orders. Existing dashboard content is untouched.
+Runs hourly at minute 17 on a standard GitHub-hosted runner in this public repository. Uses no advertising or store credentials. Nine lightweight checks cover both public websites, four GT40 unpaid checkout paths and the local collector heartbeat. Seven isolated Chromium journeys exercise mobile and desktop product, cart and hosted Payment UI across both stores, with saved-vehicle and no-saved-vehicle cases. No buyer data, payment or order is submitted.
 
-A PASS does not prove payment UI, fulfillment, attribution, profitability or all-product coverage. A connection-verification screen is UNKNOWN/failure, never a price or stock conclusion. One delayed retry reduces transient false alarms. Logs and job summaries contain only public URLs and check results; no sales, inventory counts, credentials or cart tokens. No artifact storage or external sender is added.
+The browser matrix samples four GT40 products and NoodleBomb Original; it is not all-product coverage, payment processing, fulfillment, advertising attribution or profit proof. A connection-verification screen is UNKNOWN/failure, never an inventory conclusion. Logs contain public URLs and scoped results, never checkout session URLs, credentials, sales or customer information. Existing dashboard content is untouched.
 
-Standard GitHub-hosted runners are free for public repositories. Schedules can be delayed or disabled after inactivity; the PC health index must separately check workflow enabled state and freshness, and cloud failure notification delivery is not assumed from a job result.
+Schedules can be delayed or disabled after inactivity. The local health index separately checks workflow state and freshness. Failure notification delivery must be verified independently from a failed job. No external sender is added.
 
-The existing local collector publishes only its oldest successful collection timestamp to a repository variable. Cloud runs fail if that heartbeat is missing, from the future, or older than95minutes. This proves execution freshness, not healthy ads or notification delivery. No store/ad credentials or metrics are published.
+The local collector publishes only the oldest successful timestamp across ad review, advertising assurance and commerce collection. Cloud runs fail if it is absent, future-dated or older than 95 minutes. This proves collection freshness, not healthy advertising.
