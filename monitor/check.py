@@ -49,9 +49,17 @@ def probe(kind,target,fn):
    if attempt==0:time.sleep(8)
  return {"kind":kind,"target":target,"passed":False,"error":error}
 
+def check_local_heartbeat(stamp,now):
+ if not stamp:raise ValueError("Local collection heartbeat missing")
+ age=(now-datetime.fromisoformat(stamp.replace("Z","+00:00"))).total_seconds()/60
+ if not 0<=age<=95:raise ValueError("Local collection heartbeat stale or invalid")
+ return {"scope":"local collector execution freshness only", "age_minutes":round(age,1)}
+
 def main():
  rows=[probe("page",url,lambda u=url,b=brand:check_page(u,b)) for url,brand in PAGES]
  rows.extend(probe("offer",GT+"/p/"+h,lambda h=h:check_offer(h)) for h in OFFERS)
+ if os.environ.get("GITHUB_ACTIONS"):
+  rows.append(probe("heartbeat","Local collector execution",lambda:check_local_heartbeat(os.environ.get("LOCAL_CHECK_LAST_SUCCESS"),datetime.now(timezone.utc))))
  report={"checked_at":datetime.now(timezone.utc).isoformat(),"runner":"GitHub-hosted" if os.environ.get("GITHUB_ACTIONS") else "local-validation","passed":all(r["passed"] for r in rows),"rows":rows,"payment_submitted":False,"buyer_data_entered":False,"exclusions":["Payment UI and paid orders","Ad accounts/spend/profit","All products","Guaranteed schedule or notification delivery"]}
  print(json.dumps(report,indent=2))
  if os.environ.get("GITHUB_STEP_SUMMARY"):

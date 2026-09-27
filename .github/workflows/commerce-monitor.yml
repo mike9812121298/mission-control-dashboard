@@ -12,9 +12,13 @@ jobs:
   public-purchase-paths:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      LOCAL_CHECK_LAST_SUCCESS: ${{ vars.LOCAL_CHECK_LAST_SUCCESS }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Test heartbeat expiry
+        run: python3 -m unittest discover -s monitor -p "test_*.py"
       - name: Check both public stores and four unpaid GT40 checkout paths
         run: python3 monitor/check.py
