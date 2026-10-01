@@ -7,3 +7,5 @@ The browser matrix samples four GT40 products and NoodleBomb Original; it is not
 Schedules can be delayed or disabled after inactivity. The local health index separately checks workflow state and freshness. Failure notification delivery must be verified independently from a failed job. No external sender is added.
 
 The local collector publishes only the oldest successful timestamp across ad review, advertising assurance and commerce collection. Cloud runs fail if it is absent, future-dated or older than 95 minutes. This proves collection freshness, not healthy advertising.
+
+Checkout controls may include a shipping reminder in their accessible name and may have hidden responsive duplicates. The checker selects a visible control of the correct role with a Checkout word prefix, then still requires the allowed store checkout host, matching product and Payment UI. `npm run test:selector` covers both legacy and reminder labels, hidden duplicates, wrong roles and near-match rejection; it runs before the existing browser matrix. A selector failure is not a confirmed customer outage. No schedule, notifications or spending are changed by this regression.
