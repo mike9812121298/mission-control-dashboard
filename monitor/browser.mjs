@@ -32,7 +32,9 @@ try {
    stage='add_to_cart';await add.click();
    await page.waitForFunction(brand=>JSON.parse(localStorage.getItem(brand==='GT40'?'gt40v5_cart':'nb_cart_v2')||'[]').length>0,t.brand,{timeout:15000});
    stage='cart';await page.goto(t.site+'/cart',{waitUntil:'domcontentloaded'});
-   const checkout=(t.brand==='GT40'?page.getByRole('button',{name:'Checkout',exact:true}):page.getByRole('link',{name:'Checkout',exact:true})).first();
+   // Shipping reminders can extend the accessible name; ignore hidden responsive duplicates.
+   // Exact checkout-host and Payment UI verification below still gate success.
+   const checkout=page.getByRole(t.brand==='GT40'?'button':'link',{name:/^Checkout(?:\s|$)/i}).filter({visible:true}).first();
    await checkout.waitFor({timeout:30000});if(!await checkout.isEnabled())throw Error('Disabled checkout');
    stage='hosted_payment';await checkout.click();
    const allowed=t.brand==='GT40'?['checkout.gt40marine.com','inmmrt-rk.myshopify.com']:['nu2vqa-ma.myshopify.com'];
