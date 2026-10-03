@@ -1,6 +1,7 @@
 // Public synthetic journeys only. No buyer data, orders, payment, store or ad secrets.
 import { chromium } from 'playwright';
 import fs from 'node:fs';
+import { failureEvidence } from './failure_evidence.mjs';
 const gt='https://gt40marine.com',nb='https://noodlebomb.co';
 const targets=[
  {brand:'GT40',site:gt,path:'/p/carbon-fiber-seadoo-325-300-260-230-215-185-cold-air-intake-filter-2002-2025',width:390,saved:true},
@@ -15,7 +16,7 @@ const browser=await chromium.launch({headless:true});const rows=[];
 try {
  for(const t of targets){
   const context=await browser.newContext({viewport:{width:t.width,height:900}});const page=await context.newPage();
-  let stage='product';const errors=[];page.on('pageerror',()=>errors.push('pageerror'));
+  let stage='product',operation='navigation';const errors=[];page.on('pageerror',()=>errors.push('pageerror'));
   const row={brand:t.brand,target:t.site+t.path,width:t.width,saved_vehicle:t.saved,passed:false};
   try {
    await page.route(/(google-analytics\.com|googletagmanager\.com|connect\.facebook\.net|facebook\.com\/tr|analytics\.tiktok\.com)/,r=>r.abort());
@@ -29,7 +30,8 @@ try {
    if(!await add.isEnabled())throw Error('Unavailable');
    if(t.saved && !await page.evaluate(()=>JSON.parse(localStorage.getItem('gt40v5_vehicle'))?.year===2023))throw Error('Saved vehicle absent');
    const title=await page.locator('h1').first().innerText();
-   stage='add_to_cart';await add.click();
+   stage='add_to_cart';operation='click';await add.click();
+   operation='cart_persistence';
    await page.waitForFunction(brand=>JSON.parse(localStorage.getItem(brand==='GT40'?'gt40v5_cart':'nb_cart_v2')||'[]').length>0,t.brand,{timeout:15000});
    stage='cart';await page.goto(t.site+'/cart',{waitUntil:'domcontentloaded'});
    // Shipping reminders can extend the accessible name; ignore hidden responsive duplicates.
@@ -45,7 +47,7 @@ try {
    if(!words.some(w=>body.toLowerCase().includes(w.toLowerCase())))throw Error('Wrong checkout product');
    if(errors.length)throw Error('Page script errors');
    Object.assign(row,{passed:true,payment_ui:true,checkout_host:new URL(page.url()).hostname});
-  }catch(e){Object.assign(row,{failed_stage:stage,error_type:e.name});}
+  }catch(e){Object.assign(row,{failed_stage:stage,failed_operation:stage==='add_to_cart'?operation:null,error_type:e.name,page_error_count:errors.length,failure_evidence:await failureEvidence(page,t.brand)});}
   finally{await context.close();}
   rows.push(row);console.log(JSON.stringify(row));
  }
